@@ -2,80 +2,54 @@
 
 <div class="container">
    <div class="row add-top-margin">
-    <!-- <?php echo the_category()?> -->
      <?php
 
+          $i=0;
 
+          while (have_posts()) {
 
-           $category_name = get_the_category();
+            $i++;
 
-           $args = array(
-              'taxonomy' => 'category',
-              'term' => $category_name[0]->name,
-              'posts_per_page' => 1,
-              'orderby' => 'date',
+            if ($i==1) {
 
-              );
+            ?>
 
-             $the_query = new WP_Query($args);
+              <div class="col-lg-12 first-post">
+                <div class="col-lg-6 post-thumb">
+                  <a href="<?php the_permalink(); ?>">
+                  <?php the_post_thumbnail('medium_large', ['class' => 'img-responsive', 'title' => 'Feature image']); ?>
+                  </a>
+                </div>
+                <div class="col-lg-6 post-text">
+                  <a href="<?php the_permalink(); ?>">
+                  <h1><?php    the_title();?></h1>
+                  <h3> <?php the_excerpt();?></h3>
+                  <?php the_category();?>
+                 </a>
+                </div>
+              </div>
 
-            if ( $the_query->have_posts() ) :
-             while ( $the_query->have_posts() ) : $the_query->the_post();
-             ?>
+            <?php
+            }
 
-               <div class="col-lg-12 first-post">
-                 <div class="col-lg-6 post-thumb">
-                   <?php the_post_thumbnail('medium_large', ['class' => 'img-responsive', 'title' => 'Feature image']); ?>
-                 </div>
-                 <div class="col-lg-6 post-text">
-                   <h1><?php    the_title();?></h1>
-                   <h3> <?php the_excerpt();?></h3>
+            if ($i != 1 && $i < 3) {
 
-                   <?php the_category();?>
-                 </div>
-                 <hr>
+            ?>
+
+               <div class="col-lg-4 antri-post">
+               <?php the_post_thumbnail('post-thumbnail', ['class' => 'img-responsive', 'title' => 'Feature image']); ?>
+               <?php	the_title();?>
+               <?php the_category();?>
                </div>
-               <hr>
-               <?php
-             endwhile;
-           endif;
 
-         ?>
+            <?php
+            }
 
-      <div class="col-lg-12 antra-linija">
-       <?php
+            if ($i != 2 && $i >= 3) {
 
-         $the_query = new WP_Query( $args = array(
-            'posts_per_page' => 2,
-            'orderby' => 'date',
-            'offset' => '1',
-            ));
+              ?>
 
-            if ( $the_query->have_posts() ) :
-             while ( $the_query->have_posts() ) : $the_query->the_post();?>
-             <div class="col-lg-4 antri-post">
-             <?php the_post_thumbnail('post-thumbnail', ['class' => 'img-responsive', 'title' => 'Feature image']); ?>
-             <?php	the_title();?>
-             <?php the_category();?>
-             </div>
-       <?php
-           endwhile;
-           endif;
-       ?>
-     </div>
-
-     <div class="col-lg-12">
-      <?php
-
-        $the_query = new WP_Query( $args = array(
-           'posts_per_page' => 2,
-           'orderby' => 'date',
-           'offset' => '3',
-           ));
-
-           if ( $the_query->have_posts() ) :
-            while ( $the_query->have_posts() ) : $the_query->the_post();?>
-            <div class="col-lg-offset-1 col-lg-10 third-line">
+              <div class="col-lg-offset-1 col-lg-10 third-line">
               <div class="col-lg-4">
                 <?php the_post_thumbnail('post-thumbnail', ['class' => 'img-responsive', 'title' => 'Feature image']); ?>
               </div>
@@ -85,15 +59,13 @@
                 <?php the_category();?>
               </div>
             </div>
-      <?php
-          endwhile;
-          endif;
-      ?>
-    </div>
 
+            <?php
+            }
+          }
+          ?>
 
   </div>
 </div>
 
 <?php get_footer(); ?>
-'offset' => '1',
